@@ -1,0 +1,40 @@
+Ahmad Temoor - ahmadtem@buffalo.edu - 50068455
+Syed Ali Hasan - syedhasa@buffalo.edu - 50087197
+Mark Abidargham - markabid@buffalo.edu - 50081616
+
+Data Structures Used
+---------------------
+For queuing we used an array of structs (each of which contain information we felt 
+was needed from each request that the server got. For example, the file size for SJF
+scheduling and socket file descriptor to send the response back to the appropriate client).
+
+For scheduling/multithreading purposes we created an array to store the thread pool info.
+These were synchronized with the ready queue using semaphores.
+
+Context Switches
+----------------------
+Right when the server starts listening for connections we have a context switch which creates 
+a thread that calls the schedule queue while the server continues to do listen/accept connections.
+
+Race Conditions
+----------------------
+We avoided race conditions by using locks (mainly when adding items to the ready queue) and 
+semaphores for serving each request
+
+Design Critique
+----------------------
+We made plenty of methods to hopefully make the code more readable and understandable.
+
+For shortest job first, in order to find the shortest job we constantly do a linear search
+for the entire queue size although it may not be full and there may even be no jobs waiting.
+This is not very efficient but is guaranteed to work.
+
+For FCFS we simply go through the queue (which since it's an array of structs would already 
+be in FCFS order) and once a request was scheduled we set the scheduled flag of the struct to true
+so it would not be chosen again. This results is a very quick/efficient solution.
+
+Citations
+----------------------
+systutorials.com
+programiz.com (FILE I/O)
+tutorialspoint.com
